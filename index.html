@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>前端压缩图像demo</title>
+    </head>
+    <style>
+        #img-compress{
+            width: 400px;
+        }
+    </style>
+    <body>
+        <form id="form">
+            <input id="input-file" type="file" accept="image/gif,image/jpeg,image/png" />
+        </form>
+        <br />
+        <br />
+        <img id="img-compress" src="" alt="压缩后的图片" crossorigin="anonymous" />
+
+        <script src="./compress.js"></script>
+        <script>
+            const ImageCompress = new CompressH5({
+                maxLength: 1080, // 最大长度或宽度
+                maxNotCompressSize: 2048, // 不压缩指定大小以内的文件 单位 KB
+                quality: 0.8, // 图片压缩质量 0-1之间 1最好
+                file: null, // 必须，input中的文件
+                success: null, // 必须，成功的回调
+                error: null, // 失败的回调
+            });
+
+            var inputFile = document.getElementById('input-file');
+            var imgCompress = document.getElementById('img-compress');
+            var form = document.getElementById('form');
+
+            inputFile.addEventListener('change', function () {
+                var file = inputFile.files[0];
+                if (file == null) {
+                    return;
+                }
+                if (!ImageCompress.checkFileType(file)) {
+                    // 清空文件
+                    console.log('error');
+                    form.reset();
+                    return;
+                }
+
+                ImageCompress.file = file;
+                ImageCompress.success = function (dataURL) {
+                    imgCompress.src = dataURL;
+                };
+
+                ImageCompress.compressImage();
+            });
+        </script>
+    </body>
+</html>

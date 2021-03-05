@@ -1,0 +1,11 @@
+{
+  "name": "compress-h5",
+  "version": "1.0.0",
+  "description": "compress a picture",
+  "main": "compress.js",
+  "scripts": {
+    "dev": "tsc ./compress.ts"
+  },
+  "author": "lynn",
+  "license": "ISC"
+}
